@@ -18,6 +18,7 @@ Tecnologias Utilizadas
 *   **Autenticação baseada em Cookies**
 *   **Políticas de Autorização com Claims**
 *   **Swagger** (para documentação da API)
+*   **Faker** (para gerar dados aleatórios)
 
 Configuração do Banco de Dados
 ------------------------------
@@ -26,8 +27,7 @@ O projeto inicia criando automaticamente a tabela `ProfileParameters` caso ela n
 
 A configuração da string de conexão está definida como:
 
-        "DefaultConnection": "Server=sql.bsite.net\\\\MSSQL2016;Database=loja\_valid;User Id=loja\_valid;Password=admin;"
-    
+    "DefaultConnection": "Server=sql.bsite.net\\MSSQL2016;Database=loja_valid;User Id=loja_valid;Password=admin;"
 
 Endpoints
 ---------
@@ -40,17 +40,19 @@ Endpoints
 
 **Corpo da requisição**:
 
+    
     {
       "ProfileName": "admin"
     }
-    
+        
 
 **Resposta de Sucesso**:
 
+    
     {
       "message": "Login successful."
     }
-    
+        
 
 #### Logout
 
@@ -58,36 +60,39 @@ Endpoints
 
 **Resposta de Sucesso**:
 
+    
     {
       "message": "Logout successful."
     }
-    
+        
 
 ### Configuração da Autenticação
 
 O projeto utiliza autenticação baseada em Cookies:
 
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/api/auth/login";
-                options.LogoutPath = "/api/auth/logout";
-                options.AccessDeniedPath = "/api/auth/access-denied";
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            });
     
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/api/auth/login";
+            options.LogoutPath = "/api/auth/logout";
+            options.AccessDeniedPath = "/api/auth/access-denied";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
+        
 
 ### Políticas de Autorização
 
 O projeto define duas políticas de autorização baseadas em Claims:
 
-        builder.Services.AddAuthorizationBuilder()
-            .AddPolicy("CanEditProfile", policy =>
-                policy.Requirements.Add(new ProfileOperationRequirement("CanEdit")))
-            .AddPolicy("CanDeleteProfile", policy =>
-                policy.Requirements.Add(new ProfileOperationRequirement("CanDelete")));
     
+    builder.Services.AddAuthorizationBuilder()
+        .AddPolicy("CanEditProfile", policy =>
+            policy.Requirements.Add(new ProfileOperationRequirement("CanEdit")))
+        .AddPolicy("CanDeleteProfile", policy =>
+            policy.Requirements.Add(new ProfileOperationRequirement("CanDelete")));
+        
 
 Inicialização do Banco de Dados
 -------------------------------
@@ -105,21 +110,28 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
 
 **Corpo da requisição**:
 
-    {
-      "ProfileName": "admin",
-      "Parameters": {
-        "CanEdit": "true",
-        "CanDelete": "false"
-      }
-    }
     
+    {
+      "ProfileName": "erich",
+      "CanEdit": true,
+      "CanDelete": true,
+      "Arn": "arn:aws:iam::123456789012:user/elmo",
+      "CreateDate": "2004-02-25T00:00:00",
+      "PasswordLastUsed": "2021-07-28T00:00:00",
+      "Tags": "Production",
+      "Groups": "Admins",
+      "MFADevice": "arn:aws:iam::123456789012:mfa/user_mfa",
+      "Status": "Active"
+    }
+        
 
 **Resposta de Sucesso**:
 
+    
     {
       "message": "Profile created successfully."
     }
-    
+        
 
 ### Consultar um ProfileParameter
 
@@ -127,14 +139,20 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
 
 **Resposta de Sucesso**:
 
-    {
-      "ProfileName": "admin",
-      "Parameters": {
-        "CanEdit": "true",
-        "CanDelete": "false"
-      }
-    }
     
+    {
+      "ProfileName": "erich",
+      "CanEdit": true,
+      "CanDelete": true,
+      "Arn": "arn:aws:iam::123456789012:user/elmo",
+      "CreateDate": "2004-02-25T00:00:00",
+      "PasswordLastUsed": "2021-07-28T00:00:00",
+      "Tags": "Production",
+      "Groups": "Admins",
+      "MFADevice": "arn:aws:iam::123456789012:mfa/user_mfa",
+      "Status": "Active"
+    }
+        
 
 ### Atualizar um ProfileParameter
 
@@ -142,22 +160,28 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
 
 **Corpo da requisição**:
 
-    {
-      "ProfileName": "admin",
-      "Parameters": {
-        "CanEdit": "false",
-        "CanDelete": "true"
-      }
-    }
     
+    {
+      "ProfileName": "erich",
+      "CanEdit": false,
+      "CanDelete": true,
+      "Arn": "arn:aws:iam::123456789012:user/elmo",
+      "CreateDate": "2004-02-25T00:00:00",
+      "PasswordLastUsed": "2021-07-28T00:00:00",
+      "Tags": "Production",
+      "Groups": "Admins",
+      "MFADevice": "arn:aws:iam::123456789012:mfa/user_mfa",
+      "Status": "Active"
+    }
+        
 
-**Resposta de Sucesso**: `204 No Content`
+**Resposta de Sucesso**: 204 No Content
 
 ### Excluir um ProfileParameter
 
 **URL**: DELETE `/api/profiles/{profileName}`
 
-**Resposta de Sucesso**: `204 No Content`
+**Resposta de Sucesso**: 204 No Content
 
 Background Service
 ------------------
@@ -173,8 +197,7 @@ Como Executar o Projeto
 2.  Configure a string de conexão no `appsettings.json`.
 3.  Execute o comando:
 
-        dotnet run
-    
+    dotnet run
 
 4\. Acesse o Swagger em `https://localhost:<porta>/swagger/index.html`.
 
