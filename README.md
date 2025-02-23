@@ -113,8 +113,8 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
     
     {
       "ProfileName": "erich",
-      "CanEdit": true,
-      "CanDelete": true,
+      "CanEdit": "true",
+      "CanDelete": "true",
       "Arn": "arn:aws:iam::123456789012:user/elmo",
       "CreateDate": "2004-02-25T00:00:00",
       "PasswordLastUsed": "2021-07-28T00:00:00",
@@ -142,8 +142,8 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
     
     {
       "ProfileName": "erich",
-      "CanEdit": true,
-      "CanDelete": true,
+      "CanEdit": "true",
+      "CanDelete": "true",
       "Arn": "arn:aws:iam::123456789012:user/elmo",
       "CreateDate": "2004-02-25T00:00:00",
       "PasswordLastUsed": "2021-07-28T00:00:00",
@@ -163,8 +163,8 @@ O `ProfileParameter` é utilizado para armazenar configurações específicas de
     
     {
       "ProfileName": "erich",
-      "CanEdit": false,
-      "CanDelete": true,
+      "CanEdit": "false",
+      "CanDelete": "true",
       "Arn": "arn:aws:iam::123456789012:user/elmo",
       "CreateDate": "2004-02-25T00:00:00",
       "PasswordLastUsed": "2021-07-28T00:00:00",
