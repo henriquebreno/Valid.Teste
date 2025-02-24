@@ -54,11 +54,11 @@ namespace Valid.Teste.API.FakerConfig
 
         private DateTime GenerateRandomDate()
         {
-            var start = new DateTime(2000, 1, 1); // Data de início
-            var end = DateTime.Now; // Data final sendo a data atual
-            var range = end - start; // Intervalo entre as duas datas
-            var randomValue = new Random().Next(0, (int)range.TotalDays); // Gerando um valor aleatório dentro do intervalo
-            return start.AddDays(randomValue); // Retornando a data aleatória
+            var start = new DateTime(2000, 1, 1); 
+            var end = DateTime.Now; 
+            var range = end - start; 
+            var randomValue = new Random().Next(0, (int)range.TotalDays); 
+            return start.AddDays(randomValue); 
         }
     }
 }
